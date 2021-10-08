@@ -9,18 +9,20 @@ router.get('/', (req, res) => {
   // be sure to include its associated Category and Tag data
   Product.findAll({
     include: [
-      {
-        model: Category,
-        attributes: ['id', 'category_name']
-      },
-      {
-        model: Tag,
-        attributes: ['id', 'tag_name']
-      }
+      // {
+      //   model: Category,
+      //   attributes: ['id', 'category_name']
+      // },
+      // {
+      //   model: Tag,
+      //   attributes: ['id', 'tag_name']
+      // }
     ]
 })
 .then(dbProductsData => {
-  const products = dbProductsData.map(post => post.get({ plain: true }));
+  const products = dbProductsData;
+  console.log(dbProductsData)
+  res.json(dbProductsData)
 })
   .catch(err => {
     console.log(err);
@@ -48,7 +50,9 @@ router.get('/:id', (req, res) => {
     ]
   })
   .then(dbProductData => {
-    const product = dbProductData.map(post => post.get({ plain: true }));
+    const product = dbProductData;
+    console.log(dbProductData)
+    res.json(dbProductData)
   })
   .catch(err => {
     console.log(err);

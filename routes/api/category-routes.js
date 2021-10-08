@@ -8,15 +8,19 @@ router.get('/', (req, res) => {
   // be sure to include its associated Products
   Category.findAll({
     include: [
-      {
-        model: Product,
-        attributes: ['id', 'product_name']
-      }
+      Product
+      // {
+      //   model: Product,
+      //   attributes: ['id', 'product_name']
+      // }
     ]
 })
 .then(dbCategoriesData => {
-  const categories = dbCategoriesData.map(post => post.get({ plain: true }));
+  const categories = dbCategoriesData;
+  console.log(dbCategoriesData)
+  res.json(categories)
 })
+
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
@@ -38,7 +42,9 @@ router.get('/:id', (req, res) => {
    ]
  })
  .then(dbCategoryData => {
-   const category = dbCategoryData.map(post => post.get({ plain: true }));
+  const category = dbCategoryData;
+  console.log(dbCategoryData)
+  res.json(category)
  })
  .catch(err => {
    console.log(err);
@@ -54,15 +60,12 @@ router.post('/', (req, res) => {
       res.status(200).json(category);
     })
     .then((dbCategoryData => res.status(200).json(dbCategoryData))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-}))
+    )
   });
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-  Category.update(
+  Category.update(req.body, 
     {
       where: {
         id: req.params.id

@@ -53,10 +53,6 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   // create a new tag
   Tag.create(req.body)
-  .then((category) => {
-   
-    res.status(200).json(category);
-  })
   .then((dbTagData => res.status(200).json(dbTagData))
   .catch((err) => {
     console.log(err);
